@@ -1,0 +1,21 @@
+import numpy as np
+import pandas as pd
+df = pd.read_csv("PlayTennis.csv")
+# Encoding is the process of transforming words into numbers
+# Label encoding: Assign a unique integer to each label based on alphabetical order
+from sklearn.preprocessing import LabelEncoder
+Le = LabelEncoder()
+df['outlook'] = Le.fit_transform(df['outlook'])
+df['temp'] = Le.fit_transform(df['temp'])
+df['humidity'] = Le.fit_transform(df['humidity'])
+df['windy'] = Le.fit_transform(df['windy'])
+df['play'] = Le.fit_transform(df['play'])
+y = df['play']
+#drop used to remove particular labels
+X = df.drop(['play'],axis=1)
+# Fitting the model
+from sklearn import tree
+clf = tree.DecisionTreeClassifier(criterion = 'entropy')
+clf = clf.fit(X, y)
+# We can visualize the tree using tree.plot_tree
+tree.plot_tree(clf)
